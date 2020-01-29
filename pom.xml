@@ -52,6 +52,13 @@
             <version>${org.springframework.boot-version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/net.jcip/jcip-annotations -->
+        <dependency>
+            <groupId>net.jcip</groupId>
+            <artifactId>jcip-annotations</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -67,7 +74,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.0</version>
+                <version>0.8.5</version>
                 <executions>
                     <execution>
                         <goals>
