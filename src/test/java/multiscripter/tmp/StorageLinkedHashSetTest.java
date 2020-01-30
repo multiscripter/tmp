@@ -1,11 +1,11 @@
 package multiscripter.tmp;
 
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import multiscripter.tmp.models.StorageLinkedHashSet;
 import multiscripter.tmp.models.User;
 import multiscripter.tmp.models.UserStorageAdder;
-import multiscripter.tmp.models.StorageTreeSet;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,14 +13,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Тестирует StorageTreeSet.
+ * Тестирует StorageLinkedHashSet.
  */
-public class TreeSetTest {
-
-  /**
-   * Компаратор по имени.
-   */
-  private Comparator<User> compByName = Comparator.comparing(User::getName);
+public class StorageLinkedHashSetTest {
 
   /**
    * Количество потоков.
@@ -30,14 +25,14 @@ public class TreeSetTest {
   /**
    * Хранилище пользователей.
    */
-  private StorageTreeSet<User> storage;
+  private StorageLinkedHashSet<User> storage;
 
   /**
    * Действия перед тестом.
    */
   @Before
   public void beforeTest() {
-    this.storage = new StorageTreeSet<>(this.compByName);
+    this.storage = new StorageLinkedHashSet<>();
 
     // Многопоточное заполнение хранилища.
     Thread[] threads = new Thread[this.size];
@@ -55,7 +50,7 @@ public class TreeSetTest {
     } catch (InterruptedException ex) {
       ex.printStackTrace();
     }
-    System.err.println("Nanoseconds used: " + (System.nanoTime() - startTime));
+    System.err.println("Seconds used: " + ((System.nanoTime() - startTime) / 1000000000d));
     System.err.println("Storage size: " + this.storage.size());
   }
 
@@ -83,22 +78,21 @@ public class TreeSetTest {
     assertTrue(this.storage.containsAll(list));
   }
 
-  /**
-   * Тестирует сравниватель по имени.
-   */
   @Test
-  public void testComparatorByName() {
+  public void checkInsertionOrder() {
+    this.storage.clear();
+    ArrayList<User> list = new ArrayList<>();
+    for (int a = this.size; a > 0; a--) {
+      for (int b = this.size; b > 0; b--) {
+        this.storage.add(new User(String.format("User-%d-%d", a, b), b));
+        list.add(new User(String.format("User-%d-%d", a, b), b));
+      }
+    }
     Iterator<User> iter = this.storage.iterator();
-    User cur = iter.next();
-    do {
-      User next = iter.next();
-      assertTrue(cur.getName().compareTo(next.getName()) < 0);
-      cur = next;
-    } while (iter.hasNext());
-  }
-
-  @Test
-  public void testFirst() {
-    assertEquals(new User("User-0-0", 0), this.storage.first());
+    for (int a = 0; iter.hasNext(); a++) {
+      User expected = list.get(a);
+      User actual = iter.next();
+      assertEquals(expected, actual);
+    }
   }
 }

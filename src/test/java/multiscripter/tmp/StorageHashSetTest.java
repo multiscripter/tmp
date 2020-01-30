@@ -1,11 +1,9 @@
 package multiscripter.tmp;
 
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.LinkedList;
+import multiscripter.tmp.models.StorageHashSet;
 import multiscripter.tmp.models.User;
 import multiscripter.tmp.models.UserStorageAdder;
-import multiscripter.tmp.models.StorageTreeSet;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,14 +11,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Тестирует StorageTreeSet.
+ * Тестирует StorageHashSet.
  */
-public class TreeSetTest {
-
-  /**
-   * Компаратор по имени.
-   */
-  private Comparator<User> compByName = Comparator.comparing(User::getName);
+public class StorageHashSetTest {
 
   /**
    * Количество потоков.
@@ -30,14 +23,14 @@ public class TreeSetTest {
   /**
    * Хранилище пользователей.
    */
-  private StorageTreeSet<User> storage;
+  private StorageHashSet<User> storage;
 
   /**
    * Действия перед тестом.
    */
   @Before
   public void beforeTest() {
-    this.storage = new StorageTreeSet<>(this.compByName);
+    this.storage = new StorageHashSet<>();
 
     // Многопоточное заполнение хранилища.
     Thread[] threads = new Thread[this.size];
@@ -81,24 +74,5 @@ public class TreeSetTest {
       }
     }
     assertTrue(this.storage.containsAll(list));
-  }
-
-  /**
-   * Тестирует сравниватель по имени.
-   */
-  @Test
-  public void testComparatorByName() {
-    Iterator<User> iter = this.storage.iterator();
-    User cur = iter.next();
-    do {
-      User next = iter.next();
-      assertTrue(cur.getName().compareTo(next.getName()) < 0);
-      cur = next;
-    } while (iter.hasNext());
-  }
-
-  @Test
-  public void testFirst() {
-    assertEquals(new User("User-0-0", 0), this.storage.first());
   }
 }

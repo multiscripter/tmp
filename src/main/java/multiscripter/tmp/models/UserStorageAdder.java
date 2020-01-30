@@ -1,5 +1,7 @@
 package multiscripter.tmp.models;
 
+import java.util.AbstractCollection;
+
 /**
  * Реализует сущность Добавлятель пользователей.
  */
@@ -18,7 +20,7 @@ public class UserStorageAdder extends Thread {
   /**
    * Хранилище пользователей.
    */
-  private UserStorageTreeSet storage;
+  private AbstractCollection<User> storage;
 
   /**
    * Конструктор.
@@ -29,7 +31,7 @@ public class UserStorageAdder extends Thread {
    */
   public UserStorageAdder(
       final int id,
-      final UserStorageTreeSet storage,
+      final AbstractCollection<User> storage,
       final int iterations) {
     this.name = "User-" + id;
     this.iterations = iterations;
