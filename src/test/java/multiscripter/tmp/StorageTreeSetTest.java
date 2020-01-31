@@ -3,19 +3,18 @@ package multiscripter.tmp;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
+import multiscripter.tmp.models.StorageTreeSet;
 import multiscripter.tmp.models.User;
 import multiscripter.tmp.models.UserStorageAdder;
-import multiscripter.tmp.models.StorageTreeSet;
 import org.junit.Before;
 import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
  * Тестирует StorageTreeSet.
  */
-public class TreeSetTest {
+public class StorageTreeSetTest {
 
   /**
    * Компаратор по имени.
@@ -38,7 +37,12 @@ public class TreeSetTest {
   @Before
   public void beforeTest() {
     this.storage = new StorageTreeSet<>(this.compByName);
+  }
 
+  /**
+   * Заполняет хранилище.
+   */
+  public void fillStorage() {
     // Многопоточное заполнение хранилища.
     Thread[] threads = new Thread[this.size];
     for (int a = 0; a < threads.length; a++) {
@@ -64,16 +68,16 @@ public class TreeSetTest {
    */
   @Test
   public void testAdd() {
-    this.storage.clear();
     assertTrue(this.storage.add(new User("TestName", 99)));
     assertEquals(1, this.storage.size());
   }
 
   /**
-   * Проверяет public boolean containsAll(Collection<? extends E> c).
+   * Тестирует public boolean containsAll(Collection<? extends E> c).
    */
   @Test
   public void testContainsAll() {
+    this.fillStorage();
     LinkedList<User> list = new LinkedList<>();
     for (int a = 0; a < this.size; a++) {
       for (int b = 0; b < this.size; b++) {
@@ -88,6 +92,7 @@ public class TreeSetTest {
    */
   @Test
   public void testComparatorByName() {
+    this.fillStorage();
     Iterator<User> iter = this.storage.iterator();
     User cur = iter.next();
     do {
@@ -97,8 +102,13 @@ public class TreeSetTest {
     } while (iter.hasNext());
   }
 
+  /**
+   * Тестирует public E first();
+   */
   @Test
   public void testFirst() {
-    assertEquals(new User("User-0-0", 0), this.storage.first());
+    User user = new User("test-user", 100);
+    this.storage.add(user);
+    assertEquals(user, this.storage.first());
   }
 }

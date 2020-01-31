@@ -16,8 +16,13 @@ public abstract class AbstractStorage<E> extends AbstractCollection<E> {
   /**
    * Хранилище.
    */
-  private AbstractCollection<E> storage;
+  protected AbstractCollection<E> storage;
 
+  /**
+   * Конструктор.
+   *
+   * @param storage хранилище.
+   */
   public AbstractStorage(AbstractCollection<E> storage) {
     this.lock = this;
     this.storage = storage;

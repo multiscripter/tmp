@@ -1,19 +1,21 @@
 package multiscripter.tmp;
 
-import java.util.LinkedList;
-import multiscripter.tmp.models.StorageHashSet;
+import java.util.Vector;
 import multiscripter.tmp.models.User;
 import multiscripter.tmp.models.UserStorageAdder;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
- * Тестирует StorageHashSet.
+ * Тестирует Vector.
+ * Отличия от ArrayList:
+ * Вектор синхронизирован.
+ * Имеет методы работы с ёмкостью.
+ * При достижении предела ёмкость увиличивается на 100% (у ArrayList на 50%).
  */
-public class StorageHashSetTest {
+public class VectorTest {
 
   /**
    * Количество потоков.
@@ -23,14 +25,14 @@ public class StorageHashSetTest {
   /**
    * Хранилище пользователей.
    */
-  private StorageHashSet<User> storage;
+  private Vector<User> storage;
 
   /**
    * Действия перед тестом.
    */
   @Before
   public void beforeTest() {
-    this.storage = new StorageHashSet<>();
+    this.storage = new Vector<>();
   }
 
   /**
@@ -57,27 +59,9 @@ public class StorageHashSetTest {
     System.err.println("Storage size: " + this.storage.size());
   }
 
-  /**
-   * Тестирует public boolean add(final User user).
-   */
   @Test
-  public void testAdd() {
-    assertTrue(this.storage.add(new User("TestName", 99)));
-    assertEquals(1, this.storage.size());
-  }
-
-  /**
-   * Проверяет public boolean containsAll(Collection<? extends E> c).
-   */
-  @Test
-  public void testContainsAll() {
+  public void testSize() {
     this.fillStorage();
-    LinkedList<User> list = new LinkedList<>();
-    for (int a = 0; a < this.size; a++) {
-      for (int b = 0; b < this.size; b++) {
-        list.add(new User(String.format("User-%d-%d", a, b), b));
-      }
-    }
-    assertTrue(this.storage.containsAll(list));
+    assertEquals(size * size, this.storage.size());
   }
 }

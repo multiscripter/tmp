@@ -5,7 +5,8 @@ import java.util.TreeSet;
 import net.jcip.annotations.ThreadSafe;
 
 /**
- * Реализует сущность Хранилище пользователей на основе деревянного множества.
+ * Реализует сущность Потокобезопасное хранилище пользователей
+ * на основе деревянного множества.
  */
 @ThreadSafe
 public class StorageTreeSet<E> extends AbstractStorage<E> {
