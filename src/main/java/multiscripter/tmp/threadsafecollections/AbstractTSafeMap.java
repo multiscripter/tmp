@@ -1,13 +1,11 @@
 package multiscripter.tmp.threadsafecollections;
 
-import java.util.AbstractCollection;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.AbstractMap;
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
 @ThreadSafe
-public abstract class AbstractTSafeCollection<E> {
+public class AbstractTSafeMap<K, V> {
 
   /**
    * Монитор.
@@ -17,27 +15,20 @@ public abstract class AbstractTSafeCollection<E> {
   /**
    * Коллекция.
    */
-  protected AbstractCollection<E> collection;
+  protected AbstractMap<K, V> collection;
 
   /**
    * Конструктор.
    *
    * @param collection коллекция.
    */
-  public AbstractTSafeCollection(AbstractCollection<E> collection) {
+  public AbstractTSafeMap(AbstractMap<K, V> collection) {
     this.lock = this;
     this.collection = collection;
   }
 
-  public AbstractCollection<E> getCollection() {
+  public AbstractMap<K, V> getCollection() {
     return this.collection;
-  }
-
-  @GuardedBy("lock")
-  public boolean add(final E item) {
-    synchronized (this.lock) {
-      return this.collection.add(item);
-    }
   }
 
   @GuardedBy("lock")
@@ -48,23 +39,16 @@ public abstract class AbstractTSafeCollection<E> {
   }
 
   @GuardedBy("lock")
-  public boolean contains(final Object item) {
+  public V get(final K key) {
     synchronized (this.lock) {
-      return this.collection.contains(item);
+      return this.collection.get(key);
     }
   }
 
   @GuardedBy("lock")
-  public boolean containsAll(final Collection<E> c) {
+  public V put(final K key, final V value) {
     synchronized (this.lock) {
-      return this.collection.containsAll(c);
-    }
-  }
-
-  @GuardedBy("lock")
-  public Iterator<E> iterator() {
-    synchronized (this.lock) {
-      return this.collection.iterator();
+      return this.collection.put(key, value);
     }
   }
 
