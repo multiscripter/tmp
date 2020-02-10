@@ -1,42 +1,30 @@
-package multiscripter.tmp;
+package multiscripter.tmp.threadsafecollections;
 
-import java.util.Vector;
 import multiscripter.tmp.models.User;
-import multiscripter.tmp.models.UserStorageAdder;
-import org.junit.Before;
-import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-
-/**
- * Тестирует Vector.
- * Отличия от ArrayList:
- * Вектор синхронизирован.
- * Имеет методы работы с ёмкостью.
- * При достижении предела ёмкость увиличивается на 100% (у ArrayList на 50%).
- */
-public class VectorTest {
+public abstract class AbstractStorageTest {
 
   /**
    * Количество потоков.
    */
-  private final int size = 1000;
+  protected int size = 1000;
 
   /**
    * Хранилище пользователей.
    */
-  private Vector<User> storage;
+  protected AbstractStorage<User> storage;
 
   /**
-   * Действия перед тестом.
+   * Устанавливает хранилище пользователей.
+   *
+   * @param storage хранилище пользователей.
    */
-  @Before
-  public void beforeTest() {
-    this.storage = new Vector<>();
+  public void setStorage(final AbstractStorage<User> storage) {
+    this.storage = storage;
   }
 
   /**
-   * Заполняет хранилище.
+   * Заполняет хранилище пользователей.
    */
   public void fillStorage() {
     // Многопоточное заполнение хранилища.
@@ -57,11 +45,5 @@ public class VectorTest {
     }
     System.err.println("Nanoseconds used: " + (System.nanoTime() - startTime));
     System.err.println("Storage size: " + this.storage.size());
-  }
-
-  @Test
-  public void testSize() {
-    this.fillStorage();
-    assertEquals(size * size, this.storage.size());
   }
 }

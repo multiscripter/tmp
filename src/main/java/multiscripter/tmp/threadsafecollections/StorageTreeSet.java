@@ -1,7 +1,8 @@
-package multiscripter.tmp.models;
+package multiscripter.tmp.threadsafecollections;
 
 import java.util.Comparator;
 import java.util.TreeSet;
+
 import net.jcip.annotations.ThreadSafe;
 
 /**

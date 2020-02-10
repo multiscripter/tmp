@@ -4,6 +4,7 @@ import multiscripter.tmp.TmpApplication;
 import multiscripter.tmp.config.DbConfig;
 import multiscripter.tmp.models.FileUpload;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.Date;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+@Ignore
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {DbConfig.class})

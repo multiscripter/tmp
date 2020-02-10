@@ -1,26 +1,18 @@
-package multiscripter.tmp;
+package multiscripter.tmp.threadsafecollections;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-import multiscripter.tmp.models.StorageLinkedHashSet;
 import multiscripter.tmp.models.User;
-import multiscripter.tmp.models.UserStorageAdder;
 import org.junit.Before;
 import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
  * Тестирует StorageLinkedHashSet.
  */
-public class StorageLinkedHashSetTest {
-
-  /**
-   * Количество потоков.
-   */
-  private final int size = 1000;
+public class StorageLinkedHashSetTest extends AbstractStorageTest {
 
   /**
    * Хранилище пользователей.
@@ -33,30 +25,7 @@ public class StorageLinkedHashSetTest {
   @Before
   public void beforeTest() {
     this.storage = new StorageLinkedHashSet<>();
-  }
-
-  /**
-   * Заполняет хранилище.
-   */
-  public void fillStorage() {
-    // Многопоточное заполнение хранилища.
-    Thread[] threads = new Thread[this.size];
-    for (int a = 0; a < threads.length; a++) {
-      threads[a] = new UserStorageAdder(a, this.storage, this.size);
-    }
-    long startTime = System.nanoTime();
-    try {
-      for (Thread thread : threads) {
-        thread.start();
-      }
-      for (Thread thread : threads) {
-        thread.join();
-      }
-    } catch (InterruptedException ex) {
-      ex.printStackTrace();
-    }
-    System.err.println("Nanoseconds used: " + (System.nanoTime() - startTime));
-    System.err.println("Storage size: " + this.storage.size());
+    this.setStorage(this.storage);
   }
 
   /**

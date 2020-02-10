@@ -1,6 +1,6 @@
-package multiscripter.tmp.models;
+package multiscripter.tmp.threadsafecollections;
 
-import java.util.AbstractCollection;
+import multiscripter.tmp.models.User;
 
 /**
  * Реализует сущность Добавлятель пользователей.
@@ -20,7 +20,7 @@ public class UserStorageAdder extends Thread {
   /**
    * Хранилище пользователей.
    */
-  private AbstractCollection<User> storage;
+  private AbstractStorage<User> storage;
 
   /**
    * Конструктор.
@@ -31,7 +31,7 @@ public class UserStorageAdder extends Thread {
    */
   public UserStorageAdder(
       final int id,
-      final AbstractCollection<User> storage,
+      final AbstractStorage<User> storage,
       final int iterations) {
     this.name = "User-" + id;
     this.iterations = iterations;

@@ -1,12 +1,13 @@
-package multiscripter.tmp.models;
+package multiscripter.tmp.threadsafecollections;
 
 import java.util.AbstractCollection;
+import java.util.Collection;
 import java.util.Iterator;
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
 @ThreadSafe
-public abstract class AbstractStorage<E> extends AbstractCollection<E> {
+public abstract class AbstractStorage<E> {
 
   /**
    * Монитор.
@@ -28,7 +29,7 @@ public abstract class AbstractStorage<E> extends AbstractCollection<E> {
     this.storage = storage;
   }
 
-  protected AbstractCollection<E> getStorage() {
+  public AbstractCollection<E> getStorage() {
     return this.storage;
   }
 
@@ -50,6 +51,13 @@ public abstract class AbstractStorage<E> extends AbstractCollection<E> {
   public boolean contains(final Object item) {
     synchronized (this.lock) {
       return this.storage.contains(item);
+    }
+  }
+
+  @GuardedBy("lock")
+  public boolean containsAll(final Collection<E> c) {
+    synchronized (this.lock) {
+      return this.storage.containsAll(c);
     }
   }
 

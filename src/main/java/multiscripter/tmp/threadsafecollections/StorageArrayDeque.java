@@ -1,8 +1,7 @@
-package multiscripter.tmp.models;
+package multiscripter.tmp.threadsafecollections;
 
 import java.util.ArrayDeque;
 import java.util.Collection;
-
 import net.jcip.annotations.ThreadSafe;
 
 /**
@@ -14,6 +13,9 @@ public class StorageArrayDeque<E> extends AbstractStorage<E> {
 
   protected ArrayDeque<E> storage;
 
+  /**
+   * Конструктор по умолчанию.
+   */
   public StorageArrayDeque() {
     super(new ArrayDeque<>());
     this.storage = (ArrayDeque<E>) this.getStorage();

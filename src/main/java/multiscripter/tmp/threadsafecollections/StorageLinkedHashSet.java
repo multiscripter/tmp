@@ -1,8 +1,7 @@
-package multiscripter.tmp.models;
-
-import net.jcip.annotations.ThreadSafe;
+package multiscripter.tmp.threadsafecollections;
 
 import java.util.LinkedHashSet;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * Реализует сущность Потокобезопасное хранилище пользователей
@@ -11,6 +10,9 @@ import java.util.LinkedHashSet;
 @ThreadSafe
 public class StorageLinkedHashSet<E> extends AbstractStorage<E> {
 
+  /**
+   * Конструктор по умолчанию.
+   */
   public StorageLinkedHashSet() {
     super(new LinkedHashSet<>());
   }

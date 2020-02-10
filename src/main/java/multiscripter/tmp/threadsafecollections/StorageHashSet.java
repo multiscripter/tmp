@@ -1,4 +1,4 @@
-package multiscripter.tmp.models;
+package multiscripter.tmp.threadsafecollections;
 
 import java.util.HashSet;
 import net.jcip.annotations.ThreadSafe;
@@ -10,6 +10,9 @@ import net.jcip.annotations.ThreadSafe;
 @ThreadSafe
 public class StorageHashSet<E> extends AbstractStorage<E> {
 
+  /**
+   * Конструктор по умолчанию.
+   */
   public StorageHashSet() {
     super(new HashSet<>());
   }
