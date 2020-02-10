@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Тестирует StorageLinkedHashSet.
+ * Тестирует TSafeLinkedHashSet.
  */
 public class TSafeLinkedHashSetTest extends AbstractTSafeTest {
 

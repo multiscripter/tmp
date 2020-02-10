@@ -6,7 +6,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Тестирует StorageArrayList.
+ * Тестирует TSafeArrayList.
  */
 public class TSafeArrayListTest extends AbstractTSafeTest {
 

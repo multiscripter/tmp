@@ -7,7 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Тестирует StorageCopyOnWriteArraySet.
+ * Тестирует TSafeCopyOnWriteArraySet.
  */
 public class TSafeCopyOnWriteArraySetTest extends AbstractTSafeTest {
 

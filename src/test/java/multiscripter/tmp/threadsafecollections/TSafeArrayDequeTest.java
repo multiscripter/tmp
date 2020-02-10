@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Тестирует StorageArrayDeque.
+ * Тестирует TSafeArrayDeque.
  */
 public class TSafeArrayDequeTest extends AbstractTSafeTest {
 

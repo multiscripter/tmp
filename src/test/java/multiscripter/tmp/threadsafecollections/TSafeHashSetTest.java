@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Тестирует StorageHashSet.
+ * Тестирует TSafeHashSet.
  */
 public class TSafeHashSetTest extends AbstractTSafeTest {
 
