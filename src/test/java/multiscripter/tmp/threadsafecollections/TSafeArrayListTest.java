@@ -8,19 +8,19 @@ import static org.junit.Assert.assertEquals;
 /**
  * Тестирует StorageArrayList.
  */
-public class StorageArrayListTest extends AbstractStorageTest {
+public class TSafeArrayListTest extends AbstractTSafeTest {
 
   /**
    * Хранилище пользователей.
    */
-  private StorageArrayList<User> storage;
+  private TSafeArrayList<User> storage;
 
   /**
    * Действия перед тестом.
    */
   @Before
   public void beforeTest() {
-    this.storage = new StorageArrayList<>();
+    this.storage = new TSafeArrayList<>();
     this.setStorage(this.storage);
   }
 

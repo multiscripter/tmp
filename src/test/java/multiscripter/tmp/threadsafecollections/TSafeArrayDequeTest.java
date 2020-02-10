@@ -9,19 +9,19 @@ import static org.junit.Assert.assertTrue;
 /**
  * Тестирует StorageArrayDeque.
  */
-public class StorageArrayDequeTest extends AbstractStorageTest {
+public class TSafeArrayDequeTest extends AbstractTSafeTest {
 
   /**
    * Хранилище пользователей.
    */
-  private StorageArrayDeque<User> storage;
+  private TSafeArrayDeque<User> storage;
 
   /**
    * Действия перед тестом.
    */
   @Before
   public void beforeTest() {
-    this.storage = new StorageArrayDeque<>();
+    this.storage = new TSafeArrayDeque<>();
     this.setStorage(this.storage);
   }
 

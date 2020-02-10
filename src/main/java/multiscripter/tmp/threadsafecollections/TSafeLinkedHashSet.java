@@ -1,19 +1,19 @@
 package multiscripter.tmp.threadsafecollections;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import net.jcip.annotations.ThreadSafe;
 
 /**
  * Реализует сущность Потокобезопасное хранилище пользователей
- * на основе хэшированного множества.
+ * на основе связанного хэшированного множества.
  */
 @ThreadSafe
-public class StorageHashSet<E> extends AbstractStorage<E> {
+public class TSafeLinkedHashSet<E> extends AbstractTSafeCollection<E> {
 
   /**
    * Конструктор по умолчанию.
    */
-  public StorageHashSet() {
-    super(new HashSet<>());
+  public TSafeLinkedHashSet() {
+    super(new LinkedHashSet<>());
   }
 }

@@ -10,19 +10,19 @@ import static org.junit.Assert.assertTrue;
 /**
  * Тестирует StorageHashSet.
  */
-public class StorageHashSetTest extends AbstractStorageTest {
+public class TSafeHashSetTest extends AbstractTSafeTest {
 
   /**
    * Хранилище пользователей.
    */
-  private StorageHashSet<User> storage;
+  private TSafeHashSet<User> storage;
 
   /**
    * Действия перед тестом.
    */
   @Before
   public void beforeTest() {
-    this.storage = new StorageHashSet<>();
+    this.storage = new TSafeHashSet<>();
     this.setStorage(this.storage);
   }
 

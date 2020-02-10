@@ -20,7 +20,7 @@ public class UserStorageAdder extends Thread {
   /**
    * Хранилище пользователей.
    */
-  private AbstractStorage<User> storage;
+  private AbstractTSafeCollection<User> storage;
 
   /**
    * Конструктор.
@@ -31,7 +31,7 @@ public class UserStorageAdder extends Thread {
    */
   public UserStorageAdder(
       final int id,
-      final AbstractStorage<User> storage,
+      final AbstractTSafeCollection<User> storage,
       final int iterations) {
     this.name = "User-" + id;
     this.iterations = iterations;

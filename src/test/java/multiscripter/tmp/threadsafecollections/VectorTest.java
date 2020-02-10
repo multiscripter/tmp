@@ -12,19 +12,19 @@ import static org.junit.Assert.assertEquals;
  * Имеет методы работы с ёмкостью.
  * При достижении предела ёмкость увиличивается на 100% (у ArrayList на 50%).
  */
-public class VectorTest extends AbstractStorageTest {
+public class VectorTest extends AbstractTSafeTest {
 
   /**
    * Хранилище пользователей.
    */
-  private StorageVector<User> storage;
+  private TSafeVector<User> storage;
 
   /**
    * Действия перед тестом.
    */
   @Before
   public void beforeTest() {
-    this.storage = new StorageVector<>();
+    this.storage = new TSafeVector<>();
     this.setStorage(this.storage);
   }
 

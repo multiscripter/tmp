@@ -9,7 +9,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Тестирует StorageCopyOnWriteArraySet.
  */
-public class StorageCopyOnWriteArraySetTest extends AbstractStorageTest {
+public class TSafeCopyOnWriteArraySetTest extends AbstractTSafeTest {
 
   /**
    * Количество потоков.
@@ -22,7 +22,7 @@ public class StorageCopyOnWriteArraySetTest extends AbstractStorageTest {
    * Коллекция потокобезопасна.
    * Итераторы не поддерживают операцию удаления.
    */
-  private StorageCopyOnWriteArraySet<User> storage;
+  private TSafeCopyOnWriteArraySet<User> storage;
 
   /**
    * Действия перед тестом.
@@ -30,7 +30,7 @@ public class StorageCopyOnWriteArraySetTest extends AbstractStorageTest {
   @Before
   public void beforeTest() {
     super.size = this.size;
-    this.storage = new StorageCopyOnWriteArraySet<>();
+    this.storage = new TSafeCopyOnWriteArraySet<>();
     this.setStorage(this.storage);
     this.fillStorage();
   }

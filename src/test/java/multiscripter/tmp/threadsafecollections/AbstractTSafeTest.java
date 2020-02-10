@@ -2,7 +2,7 @@ package multiscripter.tmp.threadsafecollections;
 
 import multiscripter.tmp.models.User;
 
-public abstract class AbstractStorageTest {
+public abstract class AbstractTSafeTest {
 
   /**
    * Количество потоков.
@@ -12,14 +12,14 @@ public abstract class AbstractStorageTest {
   /**
    * Хранилище пользователей.
    */
-  protected AbstractStorage<User> storage;
+  protected AbstractTSafeCollection<User> storage;
 
   /**
    * Устанавливает хранилище пользователей.
    *
    * @param storage хранилище пользователей.
    */
-  public void setStorage(final AbstractStorage<User> storage) {
+  public void setStorage(final AbstractTSafeCollection<User> storage) {
     this.storage = storage;
   }
 

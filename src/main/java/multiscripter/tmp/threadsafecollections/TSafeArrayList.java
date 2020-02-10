@@ -8,15 +8,15 @@ import net.jcip.annotations.ThreadSafe;
  * на основе списочного массива.
  */
 @ThreadSafe
-public class StorageArrayList<E> extends AbstractStorage<E> {
+public class TSafeArrayList<E> extends AbstractTSafeCollection<E> {
 
-  protected ArrayList<E> storage;
+  protected ArrayList<E> collection;
 
   /**
    * Конструктор по умолчанию.
    */
-  public StorageArrayList() {
+  public TSafeArrayList() {
     super(new ArrayList<>());
-    this.storage = (ArrayList<E>) this.getStorage();
+    this.collection = (ArrayList<E>) this.getCollection();
   }
 }

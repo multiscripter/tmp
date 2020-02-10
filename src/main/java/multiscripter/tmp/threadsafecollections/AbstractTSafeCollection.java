@@ -7,7 +7,7 @@ import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
 @ThreadSafe
-public abstract class AbstractStorage<E> {
+public abstract class AbstractTSafeCollection<E> {
 
   /**
    * Монитор.
@@ -17,61 +17,61 @@ public abstract class AbstractStorage<E> {
   /**
    * Хранилище.
    */
-  protected AbstractCollection<E> storage;
+  protected AbstractCollection<E> collection;
 
   /**
    * Конструктор.
    *
-   * @param storage хранилище.
+   * @param collection хранилище.
    */
-  public AbstractStorage(AbstractCollection<E> storage) {
+  public AbstractTSafeCollection(AbstractCollection<E> collection) {
     this.lock = this;
-    this.storage = storage;
+    this.collection = collection;
   }
 
-  public AbstractCollection<E> getStorage() {
-    return this.storage;
+  public AbstractCollection<E> getCollection() {
+    return this.collection;
   }
 
   @GuardedBy("lock")
   public boolean add(final E item) {
     synchronized (this.lock) {
-      return this.storage.add(item);
+      return this.collection.add(item);
     }
   }
 
   @GuardedBy("lock")
   public void clear() {
     synchronized (this.lock) {
-      this.storage.clear();
+      this.collection.clear();
     }
   }
 
   @GuardedBy("lock")
   public boolean contains(final Object item) {
     synchronized (this.lock) {
-      return this.storage.contains(item);
+      return this.collection.contains(item);
     }
   }
 
   @GuardedBy("lock")
   public boolean containsAll(final Collection<E> c) {
     synchronized (this.lock) {
-      return this.storage.containsAll(c);
+      return this.collection.containsAll(c);
     }
   }
 
   @GuardedBy("lock")
   public Iterator<E> iterator() {
     synchronized (this.lock) {
-      return this.storage.iterator();
+      return this.collection.iterator();
     }
   }
 
   @GuardedBy("lock")
   public int size() {
     synchronized (this.lock) {
-      return this.storage.size();
+      return this.collection.size();
     }
   }
 }

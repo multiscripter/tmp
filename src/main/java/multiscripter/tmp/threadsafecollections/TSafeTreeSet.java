@@ -2,7 +2,6 @@ package multiscripter.tmp.threadsafecollections;
 
 import java.util.Comparator;
 import java.util.TreeSet;
-
 import net.jcip.annotations.ThreadSafe;
 
 /**
@@ -10,26 +9,26 @@ import net.jcip.annotations.ThreadSafe;
  * на основе деревянного множества.
  */
 @ThreadSafe
-public class StorageTreeSet<E> extends AbstractStorage<E> {
+public class TSafeTreeSet<E> extends AbstractTSafeCollection<E> {
 
   /**
    * Хранилище.
    */
-  private TreeSet<E> storage;
+  private TreeSet<E> collection;
 
   /**
    * Конструктор.
    *
    * @param comparator сравниватель.
    */
-  public StorageTreeSet(final Comparator<E> comparator) {
+  public TSafeTreeSet(final Comparator<E> comparator) {
     super(new TreeSet<>(comparator));
-    this.storage = (TreeSet<E>) this.getStorage();
+    this.collection = (TreeSet<E>) this.getCollection();
   }
 
   public E first() {
     synchronized (this.lock) {
-      return this.storage.first();
+      return this.collection.first();
     }
   }
 }

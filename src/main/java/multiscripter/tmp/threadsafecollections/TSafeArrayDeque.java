@@ -9,21 +9,21 @@ import net.jcip.annotations.ThreadSafe;
  * на основе дэка на массиве.
  */
 @ThreadSafe
-public class StorageArrayDeque<E> extends AbstractStorage<E> {
+public class TSafeArrayDeque<E> extends AbstractTSafeCollection<E> {
 
-  protected ArrayDeque<E> storage;
+  protected ArrayDeque<E> collection;
 
   /**
    * Конструктор по умолчанию.
    */
-  public StorageArrayDeque() {
+  public TSafeArrayDeque() {
     super(new ArrayDeque<>());
-    this.storage = (ArrayDeque<E>) this.getStorage();
+    this.collection = (ArrayDeque<E>) this.getCollection();
   }
 
-  public StorageArrayDeque(Collection<? extends E> c) {
+  public TSafeArrayDeque(Collection<? extends E> c) {
     super(new ArrayDeque<>(c));
-    this.storage = (ArrayDeque<E>) this.getStorage();
+    this.collection = (ArrayDeque<E>) this.getCollection();
   }
 
   /**
@@ -31,20 +31,20 @@ public class StorageArrayDeque<E> extends AbstractStorage<E> {
    *
    * @param minSize минимальная ёмкость деки.
    */
-  public StorageArrayDeque(int minSize) {
+  public TSafeArrayDeque(int minSize) {
     super(new ArrayDeque<>(minSize));
-    this.storage = (ArrayDeque<E>) this.getStorage();
+    this.collection = (ArrayDeque<E>) this.getCollection();
   }
 
   public void addFirst(E e) {
     synchronized (this.lock) {
-      this.storage.addFirst(e);
+      this.collection.addFirst(e);
     }
   }
 
   public E getFirst() {
     synchronized (this.lock) {
-      return this.storage.getFirst();
+      return this.collection.getFirst();
     }
   }
 }

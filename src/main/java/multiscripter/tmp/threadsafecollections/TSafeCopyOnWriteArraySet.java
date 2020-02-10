@@ -3,23 +3,23 @@ package multiscripter.tmp.threadsafecollections;
 import java.util.Collection;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-public class StorageCopyOnWriteArraySet<E> extends AbstractStorage<E> {
+public class TSafeCopyOnWriteArraySet<E> extends AbstractTSafeCollection<E> {
 
-  protected CopyOnWriteArraySet<E> storage;
+  protected CopyOnWriteArraySet<E> collection;
 
   /**
    * Конструктор по умолчанию.
    */
-  public StorageCopyOnWriteArraySet() {
+  public TSafeCopyOnWriteArraySet() {
     super(new CopyOnWriteArraySet<>());
-    this.storage = (CopyOnWriteArraySet<E>) this.getStorage();
+    this.collection = (CopyOnWriteArraySet<E>) this.getCollection();
   }
 
   public boolean add(final E item) {
-    return this.storage.add(item);
+    return this.collection.add(item);
   }
 
   public boolean containsAll(final Collection<E> c) {
-    return this.storage.containsAll(c);
+    return this.collection.containsAll(c);
   }
 }
