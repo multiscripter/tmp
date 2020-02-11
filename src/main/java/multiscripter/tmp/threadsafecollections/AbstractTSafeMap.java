@@ -39,6 +39,20 @@ public class AbstractTSafeMap<K, V> {
   }
 
   @GuardedBy("lock")
+  public boolean containsKey(K key) {
+    synchronized (this.lock) {
+      return this.collection.containsKey(key);
+    }
+  }
+
+  @GuardedBy("lock")
+  public boolean containsValue(V value) {
+    synchronized (this.lock) {
+      return this.collection.containsValue(value);
+    }
+  }
+
+  @GuardedBy("lock")
   public V get(final K key) {
     synchronized (this.lock) {
       return this.collection.get(key);

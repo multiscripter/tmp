@@ -1,12 +1,13 @@
 package multiscripter.tmp.threadsafecollections;
 
+import java.util.Map;
 import multiscripter.tmp.models.User;
 
 /**
  * Реализует сущность Добавлятель пользователей.
- * В качестве коллекции используются карты.
+ * В качестве коллекции используются стандартные карты.
  */
-public class UserStorageMapAdder extends Thread {
+public class UserConcurrentMapAdder extends Thread {
 
   /**
    * Имя добавлятеля.
@@ -21,22 +22,22 @@ public class UserStorageMapAdder extends Thread {
   /**
    * Хранилище пользователей.
    */
-  private AbstractTSafeMap<String, User> storage;
+  private Map<String, User> map;
 
   /**
    * Конструктор.
    *
    * @param id         идентификатор.
-   * @param storage    хранилище.
+   * @param map        хранилище.
    * @param iterations количество итераций.
    */
-  public UserStorageMapAdder(
+  public UserConcurrentMapAdder(
       final int id,
-      final AbstractTSafeMap<String, User> storage,
+      final Map<String, User> map,
       final int iterations) {
     this.name = "User-" + id;
     this.iterations = iterations;
-    this.storage = storage;
+    this.map = map;
   }
 
   /**
@@ -47,7 +48,7 @@ public class UserStorageMapAdder extends Thread {
     try {
       for (int a = 0; a < this.iterations; a++) {
         User u = new User(this.name + "-" + a, a);
-        this.storage.put(u.getName(), u);
+        this.map.put(u.getName(), u);
         sleep(1);
       }
     } catch (InterruptedException ex) {

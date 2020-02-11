@@ -26,7 +26,7 @@ public abstract class AbstractTSafeMapTest {
   /**
    * Заполняет хранилище пользователей.
    */
-  public void fillStorage() {
+  public long fillStorage() {
     // Многопоточное заполнение хранилища.
     Thread[] threads = new Thread[this.size];
     for (int a = 0; a < threads.length; a++) {
@@ -43,7 +43,9 @@ public abstract class AbstractTSafeMapTest {
     } catch (InterruptedException ex) {
       ex.printStackTrace();
     }
-    System.err.println("Nanoseconds used: " + (System.nanoTime() - startTime));
+    long time = System.nanoTime() - startTime;
+    System.err.println("Nanoseconds used: " + time);
     System.err.println("Storage size: " + this.storage.size());
+    return time;
   }
 }
