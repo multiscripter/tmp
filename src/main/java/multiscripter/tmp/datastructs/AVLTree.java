@@ -138,19 +138,6 @@ public class AVLTree<E> {
         while (tmp.left != null) {
           tmp = tmp.left;
         }
-        /*
-        while (true) {
-          // (спуск налево).
-          if (tmp.left != null) {
-            tmp = tmp.left;
-          }
-          // Обработка дубликатов (спуск направо).
-          else if (tmp.right != null && AVLTree.this.comparator.compare(tmp.val, tmp.right.val) == 0) {
-            tmp = tmp.right;
-          } else {
-            break;
-          }
-        }*/
         this.next = tmp;
       }
     }
@@ -179,24 +166,11 @@ public class AVLTree<E> {
             this.next = tmp;
             break;
           }
-          /* Обработка дубликатов (подъём).
-          if (tmp.parent != null && AVLTree.this.comparator.compare(tmp.parent.val, tmp.val) == 0) {
-            this.next = tmp.parent;
-            break;
-          }*/
           tmp = tmp.parent;
           if (tmp != null && AVLTree.this.comparator.compare(tmp.val, this.cur.val) > 0) {
             this.next = tmp;
             break;
           }
-          /*if (tmp == null || tmp.left == this.cur || (tmp.parent == null && AVLTree.this.comparator.compare(this.cur.val, tmp.val) < 0)) {
-            // Обработка дубликатов (спуск направо).
-            //          while (tmp != null && tmp.right != null && AVLTree.this.comparator.compare(tmp.val, tmp.right.val) == 0) {
-            //            tmp = tmp.right;
-            //          }
-            this.next = tmp;
-            break;
-          }*/
         }
       }
     }
