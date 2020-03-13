@@ -31,20 +31,124 @@ public class AVLTree<E> {
     node.height = Math.max(hl, hr) + 1;
   }
 
-  private Node<E> balance(Node<E> p) {
-    this.fixHeight(p);
-    if (this.bFactor(p) == 2) {
-      if (this.bFactor(p.right) < 0) {
-        p.right = this.rotateRight(p.right);
-        return this.rotateLeft(p);
-      }
-    } else if (this.bFactor(p) == -2) {
-      if (this.bFactor(p.left) > 0) {
-        p.left = this.rotateLeft(p.left);
-        return this.rotateRight(p);
-      }
+  private void balance(Node<E> node) {
+    this.fixHeight(node);
+    // Нужен левый поворот.
+    if (this.bFactor(node) == 2) {
+      /*if (this.bFactor(node.right) < 0) {
+        this.rotateRight(node.right);
+      }*/
+      this.rotateLeft(node);
+//      if (this.bFactor(node.right) < 0) {
+//        node.right = this.rotateRight(node.right);
+//        this.rotateLeft(node);
+//      }
     }
-    return p;
+    // Нужен правый поворот.
+    else if (this.bFactor(node) == -2) {
+      /*if (this.bFactor(node.left) > 0) {
+        this.rotateLeft(node.left);
+      }*/
+      this.rotateRight(node);
+//      if (this.bFactor(node.left) > 0) {
+//        node.left = this.rotateLeft(node.left);
+//        this.rotateRight(node);
+//      }
+    }
+  }
+
+  /**
+   * Левый поворот.
+   * @param left корень поддерева.
+   */
+  private void rotateLeft(Node<E> left) {
+    //System.err.println("left: " + left.val);
+    Node<E> parent = left.parent;
+    Node<E> core = left.right;
+    Node<E> middle = core.left;
+    // Большой поворот.
+    if (middle != null) {
+      middle.parent = parent;
+      core.left = null;
+      if (parent != null) {
+        parent.right = middle;
+      } else {
+        this.root = middle;
+      }
+      middle.right = core;
+      core.parent = middle;
+      middle.left = left;
+      left.parent = middle;
+    }
+    // Малый поворот.
+    else {
+      core.parent = parent;
+      if (parent != null) {
+        parent.right = core;
+      } else {
+        this.root = core;
+      }
+      core.left = left;
+      left.parent = core;
+    }
+    left.right = null;
+    this.fixHeight(left);
+    this.fixHeight(core);
+    if (middle != null) {
+      this.fixHeight(middle);
+    }
+    if (parent != null) {
+      this.fixHeight(parent);
+    }
+  }
+
+  /**
+   * Правый поворот.
+   * @param right корень поддерева.
+   */
+  private void rotateRight(Node<E> right) {
+    //System.err.println("right: " + right.val);
+    Node<E> parent = right.parent;
+    Node<E> core = right.left;
+    Node<E> middle = core.right;
+    // Большой поворот.
+    if (middle != null) {
+      middle.parent = parent;
+      core.right = null;
+      if (parent != null) {
+        parent.left = middle;
+      } else {
+        this.root = middle;
+      }
+      middle.left = core;
+      core.parent = middle;
+      middle.right = right;
+      right.parent = middle;
+    }
+    // Малый поворот.
+    else {
+      core.parent = parent;
+      if (parent != null) {
+        parent.left = core;
+      } else {
+        this.root = core;
+      }
+      core.right = right;
+      right.parent = core;
+    }
+    right.left = null;
+    this.fixHeight(right);
+    this.fixHeight(core);
+    if (middle != null) {
+      this.fixHeight(middle);
+    }
+    if (parent != null) {
+      this.fixHeight(parent);
+    }
+  }
+
+  public Node<E> getRoot() {
+    return this.root;
   }
 
   public boolean insert(E val) {
@@ -54,7 +158,8 @@ public class AVLTree<E> {
     } else {
       Node<E> parent = this.root;
       while (true) {
-        node.setParent(parent);
+        //System.err.println(node.val);
+        node.parent = parent;
         if (this.comparator.compare(node.val, parent.val) < 0) {
           if (parent.left != null) {
             parent = parent.left;
@@ -71,8 +176,14 @@ public class AVLTree<E> {
           }
         }
       }
+      do {
+        //if (parent.parent != null)
+          //System.err.println("parent before: " + parent.val + ", " + parent.parent.val);
+        this.balance(parent);
+        //if (parent.parent != null)
+          //System.err.println("parent after: " + parent.val + ", " + parent.parent.val);
+      } while ((parent = parent.parent) != null);
     }
-    //this.balance(node);
     return true;
   }
 
@@ -81,33 +192,10 @@ public class AVLTree<E> {
   }
 
   /**
-   * Малый правый поворот.
-   * @param p корень поддерева.
-   * @return новый корень поддерева.
-   */
-  private Node<E> rotateRight(Node<E> p) {
-    Node<E> q = p.left;
-    p.left = q.right;
-    q.right = p;
-    this.fixHeight(p);
-    this.fixHeight(q);
-    return q;
-  }
-
-  private Node<E> rotateLeft(Node<E> q) {
-    Node<E> p = q.right;
-    q.right = p.left;
-    p.left = q;
-    this.fixHeight(q);
-    this.fixHeight(p);
-    return p;
-  }
-
-  /**
    * Узел дерева.
    * @param <E> параметрический тип.
    */
-  private class Node<E> {
+  protected class Node<E> {
     private Node<E> parent;
     private E val;
     private int height;
@@ -122,6 +210,30 @@ public class AVLTree<E> {
 
     public void setParent(Node<E> parent) {
       this.parent = parent;
+    }
+
+    public int getHeight() {
+      return this.height;
+    }
+
+    public Node<E> getLeft() {
+      return this.left;
+    }
+
+    public Node<E> getRight() {
+      return this.right;
+    }
+
+    public E getVal() {
+      return this.val;
+    }
+
+    public void setLeft(Node<E> left) {
+      this.left = left;
+    }
+
+    public void setRight(Node<E> right) {
+      this.right = right;
     }
   }
 

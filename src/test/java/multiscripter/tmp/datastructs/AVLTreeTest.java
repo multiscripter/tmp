@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 
 public class AVLTreeTest {
 
-  Comparator<Integer> comparator = Integer::compare;
+  private Comparator<Integer> comparator = Integer::compare;
 
   @Test
   public void testInsert() {
@@ -47,6 +47,7 @@ public class AVLTreeTest {
     }
   }
 
+  //TODO: тест падает после доваления 8 при балансировке дерева (поворотах).
   @Test
   public void testDFS() {
     Integer[] nums = new Integer[] {2, 3, 5, 4, 9, 6, 10, 1, 7, 8};
@@ -65,5 +66,55 @@ public class AVLTreeTest {
       int actual = iterActual.next();
       assertEquals(expected, actual);
     }
+  }
+
+  @Test
+  public void testRotateLeft() {
+    int[] nums = new int[] {2, 1, 3, 4, 5};
+    AVLTree<Integer> tree = new AVLTree<>(comparator);
+    for (Integer a : nums) {
+      tree.insert(a);
+    }
+    Integer[] expected = new Integer[] {2, 4, 5};
+    AVLTree<Integer>.Node<Integer> node = tree.getRoot();
+    int index = 0;
+    do {
+      assertEquals(expected[index++], node.getVal());
+    } while ((node = node.getRight()) != null);
+  }
+
+  @Test
+  public void testRotateLeft2() {
+    Integer[] nums = new Integer[] {2, 1, 3, 5, 4, 6};
+    LinkedList<Integer> list = new LinkedList<>(Arrays.asList(nums));
+    System.out.println(list);
+    list.sort(comparator);
+    System.out.println(list);
+    AVLTree<Integer> tree = new AVLTree<>(comparator);
+    for (Integer a : nums) {
+      tree.insert(a);
+    }
+    Iterator<Integer> iterExpected = list.iterator();
+    Iterator<Integer> iterActual = tree.iterator();
+    while (iterExpected.hasNext()) {
+      int expected = iterExpected.next();
+      int actual = iterActual.next();
+      assertEquals(expected, actual);
+    }
+  }
+
+  @Test
+  public void testRotateRight() {
+    int[] nums = new int[] {4, 5, 3, 2, 1};
+    AVLTree<Integer> tree = new AVLTree<>(comparator);
+    for (Integer a : nums) {
+      tree.insert(a);
+    }
+    Integer[] expected = new Integer[] {4, 2, 1};
+    AVLTree<Integer>.Node<Integer> node = tree.getRoot();
+    int index = 0;
+    do {
+      assertEquals(expected[index++], node.getVal());
+    } while ((node = node.getLeft()) != null);
   }
 }
