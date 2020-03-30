@@ -35,25 +35,11 @@ public class AVLTree<E> {
     this.fixHeight(node);
     // Нужен левый поворот.
     if (this.bFactor(node) == 2) {
-      /*if (this.bFactor(node.right) < 0) {
-        this.rotateRight(node.right);
-      }*/
       this.rotateLeft(node);
-//      if (this.bFactor(node.right) < 0) {
-//        node.right = this.rotateRight(node.right);
-//        this.rotateLeft(node);
-//      }
     }
     // Нужен правый поворот.
     else if (this.bFactor(node) == -2) {
-      /*if (this.bFactor(node.left) > 0) {
-        this.rotateLeft(node.left);
-      }*/
       this.rotateRight(node);
-//      if (this.bFactor(node.left) > 0) {
-//        node.left = this.rotateLeft(node.left);
-//        this.rotateRight(node);
-//      }
     }
   }
 
@@ -62,7 +48,6 @@ public class AVLTree<E> {
    * @param left корень поддерева.
    */
   private void rotateLeft(Node<E> left) {
-    //System.err.println("left: " + left.val);
     Node<E> parent = left.parent;
     Node<E> core = left.right;
     Node<E> middle = core.left;
@@ -71,20 +56,36 @@ public class AVLTree<E> {
       middle.parent = parent;
       core.left = null;
       if (parent != null) {
-        parent.right = middle;
+        if (parent.left == left) {
+          parent.left = middle;
+        } else {
+          parent.right = middle;
+        }
       } else {
         this.root = middle;
       }
-      middle.right = core;
-      core.parent = middle;
-      middle.left = left;
-      left.parent = middle;
+      Node<E> tmpRight = middle;
+      while (tmpRight.right != null) {
+        tmpRight = tmpRight.right;
+      }
+      tmpRight.right = core;
+      core.parent = tmpRight;
+      Node<E> tmpLeft = middle;
+      while (tmpLeft.left != null) {
+        tmpLeft = tmpLeft.left;
+      }
+      tmpLeft.left = left;
+      left.parent = tmpLeft;
     }
     // Малый поворот.
     else {
       core.parent = parent;
       if (parent != null) {
-        parent.right = core;
+        if (parent.left == left) {
+          parent.left = core;
+        } else {
+          parent.right = core;
+        }
       } else {
         this.root = core;
       }
@@ -107,7 +108,6 @@ public class AVLTree<E> {
    * @param right корень поддерева.
    */
   private void rotateRight(Node<E> right) {
-    //System.err.println("right: " + right.val);
     Node<E> parent = right.parent;
     Node<E> core = right.left;
     Node<E> middle = core.right;
@@ -116,20 +116,36 @@ public class AVLTree<E> {
       middle.parent = parent;
       core.right = null;
       if (parent != null) {
-        parent.left = middle;
+        if (parent.right == right) {
+          parent.right = middle;
+        } else {
+          parent.left = middle;
+        }
       } else {
         this.root = middle;
       }
-      middle.left = core;
-      core.parent = middle;
-      middle.right = right;
-      right.parent = middle;
+      Node<E> tmpLeft = middle;
+      while (tmpLeft.left != null) {
+        tmpLeft = tmpLeft.left;
+      }
+      tmpLeft.left = core;
+      core.parent = tmpLeft;
+      Node<E> tmpRight = middle;
+      while (tmpRight.right != null) {
+        tmpRight = tmpRight.right;
+      }
+      tmpRight.right = right;
+      right.parent = tmpRight;
     }
     // Малый поворот.
     else {
       core.parent = parent;
       if (parent != null) {
-        parent.left = core;
+        if (parent.right == right) {
+          parent.right = core;
+        } else {
+          parent.left = core;
+        }
       } else {
         this.root = core;
       }
@@ -158,7 +174,6 @@ public class AVLTree<E> {
     } else {
       Node<E> parent = this.root;
       while (true) {
-        //System.err.println(node.val);
         node.parent = parent;
         if (this.comparator.compare(node.val, parent.val) < 0) {
           if (parent.left != null) {
@@ -177,11 +192,7 @@ public class AVLTree<E> {
         }
       }
       do {
-        //if (parent.parent != null)
-          //System.err.println("parent before: " + parent.val + ", " + parent.parent.val);
         this.balance(parent);
-        //if (parent.parent != null)
-          //System.err.println("parent after: " + parent.val + ", " + parent.parent.val);
       } while ((parent = parent.parent) != null);
     }
     return true;
